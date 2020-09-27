@@ -16,12 +16,27 @@ app-root {
 }
 
 header {
-  background: #5851ff;
-  color: white;
+  background-color: rgb(31, 50, 85);
   height: 56px;
   display: flex;
   align-items: center;
   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
+}
+
+.icon {
+  display: block;
+  float: left;
+  width: 32px;
+  height: 32px;
+  background-color: #FFFFFF;
+  border-radius: 32px;
+  margin-left: 1rem;
+  padding: 4px;
+  box-sizing: border-box;
+}
+
+h2, h3, h4 {
+  color: rgb(31, 50, 85);
 }
 
 h1 {
@@ -64,7 +79,7 @@ pre {
 
 button,
 input[type="submit"] {
-  background: #5851ff;
+  background-color: rgb(31, 50, 85);
   color: white;
   margin: 0.5rem;
   border: none;
@@ -96,6 +111,7 @@ input[type="submit"]:hover:not(:disabled),
 input.pressed {
   box-shadow: 0 3px 6px rgba(0,0,0,.1), 0 1px 3px rgba(0,0,0,.1);
   transform: translateY(1px);
+  background-color: rgb(70, 130, 179);
 }
 
 button:disabled,

@@ -205,6 +205,7 @@ export class AppRoot {
     return (
       [
         <header>
+          <img src="assets/icon.png" class="icon" />
           <h1>xAPI.js Wrapper demo</h1>
         </header>,
         <main>
