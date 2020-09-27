@@ -13,6 +13,8 @@ export class AppRoot {
   @State() endpointValue: string = "";
   @State() authorizationValue: string = "";
   @State() agentValue: string = "";
+  @State() statementIdValue: string = "";
+  @State() attachmentsValue: boolean = false;
   @State() consoleText: string = "";
 
   @State() xapi: XAPI;
@@ -75,6 +77,13 @@ export class AppRoot {
       });
   }
 
+  getStatement() {
+    this.xapi.getStatement({
+      statementId: this.statementIdValue,
+      attachments: this.attachmentsValue
+    })
+  }
+
   addToConsole(label: string, output: string) {
     this.consoleText += `\\\\ ${label}\n\n`;
     this.consoleText += output;
@@ -109,7 +118,7 @@ export class AppRoot {
                     type="url"
                     value={this.endpointValue}
                     onInput={(e) => this.endpointValue = (e.target as HTMLInputElement).value}
-                  ></input>
+                  />
                 </label>
                 <label>
                   Authorization
@@ -119,7 +128,7 @@ export class AppRoot {
                     onInput={(e) => this.authorizationValue = (e.target as HTMLInputElement).value}
                     autoCorrect={"false"}
                     autoCapitalize={"false"}
-                  ></input>
+                  />
                 </label>
                 <label>
                   Version
@@ -165,6 +174,37 @@ export class AppRoot {
                   ></textarea>
                 </label>
                 <button onClick={() => this.getAgent()} disabled={!this.xapi}>getAgent(...)</button>
+              </details>
+            </details>
+
+            {/* Statement Resource */}
+            <details>
+              <summary>
+                <h3>Statement Resource</h3>
+              </summary>
+              <details open>
+                <summary>
+                  <h4>Get Statement</h4>
+                  </summary>
+                <label>
+                  statementId
+                  <input
+                    type="text"
+                    value={this.statementIdValue}
+                    onInput={(e) => this.statementIdValue = (e.target as HTMLInputElement).value}
+                    autoCorrect={"false"}
+                    autoCapitalize={"false"}
+                  />
+                </label>
+                <label>
+                  attachments
+                  <input
+                    type="checkbox"
+                    checked={this.attachmentsValue}
+                    onInput={(e) => this.attachmentsValue = (e.target as HTMLInputElement).checked}
+                  />
+                </label>
+                <button onClick={() => this.getStatement()} disabled={!this.xapi || !this.statementIdValue}>getStatement(...)</button>
               </details>
             </details>
           </div>

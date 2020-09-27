@@ -66,7 +66,7 @@ button,
 input[type="submit"] {
   background: #5851ff;
   color: white;
-  margin-bottom: 1rem;
+  margin: 0.5rem;
   border: none;
   font-size: 13px;
   font-weight: 700;
@@ -77,7 +77,6 @@ input[type="submit"] {
   letter-spacing: .04em;
   transition: all .15s ease;
   cursor: pointer;
-  margin-right: 1rem;
 }
 
 @media (max-width: 768px) {
@@ -103,8 +102,27 @@ input[type="submit"]:disabled {
   cursor: not-allowed;
 }
 
+details {
+  border: 2px solid #CCCCCC;
+  border-radius: 0.5rem;
+  padding: 1rem;
+}
+
+details + details {
+  margin-top: 1rem;
+}
+
 summary > * {
   display: inline-block;
+  margin: 0;
+}
+
+details[open] > summary {
+  margin-bottom: 1rem;
+}
+
+form {
+  margin: 0.5rem;
 }
 
 label {
