@@ -37,7 +37,7 @@ export class AppRoot {
       if (xAPILaunchData.endpoint) this.endpointValue = xAPILaunchData.endpoint;
     })
     .catch((error) => {
-      this.addToConsole('getXAPILaunchData()', JSON.stringify(error, null, 2));
+      this.addToConsole('getXAPILaunchData()', error);
     });
   }
 
