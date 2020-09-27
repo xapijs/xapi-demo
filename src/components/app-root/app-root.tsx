@@ -19,9 +19,11 @@ export class AppRoot {
 
   @State() statementIdValue: string = "";
   @State() attachmentsValue: boolean = false;
+  @State() formatValue: string = "";
 
   @State() voidedStatementIdValue: string = "";
   @State() voidedAttachmentsValue: boolean = false;
+  @State() voidedFormatValue: string = "";
 
   @State() getStatementsAgentValue: string = "";
   @State() getStatementsVerbValue: string = "";
@@ -100,7 +102,8 @@ export class AppRoot {
   getStatement() {
     this.xapi.getStatement({
       statementId: this.statementIdValue,
-      attachments: this.attachmentsValue
+      attachments: this.attachmentsValue,
+      ...(this.formatValue ? { format: this.formatValue as any } : null)
     })
       .then((result) => {
         this.addToConsole('getStatement()', JSON.stringify(result.data, null, 2));
@@ -113,7 +116,8 @@ export class AppRoot {
   getVoidedStatement() {
     this.xapi.getVoidedStatement({
       voidedStatementId: this.voidedStatementIdValue,
-      attachments: this.voidedAttachmentsValue
+      attachments: this.voidedAttachmentsValue,
+      ...(this.voidedFormatValue ? { format: this.voidedFormatValue as any } : null)
     })
       .then((result) => {
         this.addToConsole('getVoidedStatement()', JSON.stringify(result.data, null, 2));
@@ -268,6 +272,18 @@ export class AppRoot {
                     onInput={(e) => this.attachmentsValue = (e.target as HTMLInputElement).checked}
                   />
                 </label>
+                <label>
+                  format
+                  <select onChange={(e) => {
+                    const target = e.target as HTMLSelectElement;
+                    this.formatValue = target.options[target.selectedIndex].value;
+                  }}>
+                    <option value=""></option>
+                    <option value="exact">exact</option>
+                    <option value="ids">ids</option>
+                    <option value="canonical">canonical</option>
+                  </select>
+                </label>
                 <button onClick={() => this.getStatement()} disabled={!this.xapi || !this.statementIdValue}>getStatement(...)</button>
               </details>
 
@@ -293,6 +309,18 @@ export class AppRoot {
                     checked={this.voidedAttachmentsValue}
                     onInput={(e) => this.voidedAttachmentsValue = (e.target as HTMLInputElement).checked}
                   />
+                </label>
+                <label>
+                  format
+                  <select onChange={(e) => {
+                    const target = e.target as HTMLSelectElement;
+                    this.voidedFormatValue = target.options[target.selectedIndex].value;
+                  }}>
+                    <option value=""></option>
+                    <option value="exact">exact</option>
+                    <option value="ids">ids</option>
+                    <option value="canonical">canonical</option>
+                  </select>
                 </label>
                 <button onClick={() => this.getVoidedStatement()} disabled={!this.xapi || !this.voidedStatementIdValue}>getVoidedStatement(...)</button>
               </details>
