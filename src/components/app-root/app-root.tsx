@@ -38,6 +38,8 @@ export class AppRoot {
   @State() getStatementsAscendingValue: boolean = false;
   @State() getStatementsFormatValue: string = "";
 
+  @State() getMoreStatementsMoreValue: string = "";
+
   @State() consoleText: string = "";
 
 
@@ -147,6 +149,16 @@ export class AppRoot {
       })
       .catch((error) => {
         this.addToConsole('getStatements()', JSON.stringify(error, null, 2));
+      });
+  }
+
+  getMoreStatements() {
+    this.xapi.getMoreStatements(this.getMoreStatementsMoreValue)
+      .then((result) => {
+        this.addToConsole('getMoreStatements()', JSON.stringify(result.data, null, 2));
+      })
+      .catch((error) => {
+        this.addToConsole('getMoreStatements()', JSON.stringify(error, null, 2));
       });
   }
 
@@ -448,6 +460,24 @@ export class AppRoot {
                   </select>
                 </label>
                 <button onClick={() => this.getStatements()} disabled={!this.xapi}>getStatements(...)</button>
+              </details>
+
+              {/* Get More Statements */}
+              <details>
+                <summary>
+                  <h4>Get More Statements</h4>
+                </summary>
+                <label>
+                  more
+                  <input
+                    type="text"
+                    value={this.getMoreStatementsMoreValue}
+                    onInput={(e) => this.getMoreStatementsMoreValue = (e.target as HTMLInputElement).value}
+                    autoCorrect={"false"}
+                    autoCapitalize={"false"}
+                  />
+                </label>
+                <button onClick={() => this.getMoreStatements()} disabled={!this.xapi || !this.getMoreStatementsMoreValue}>getMoreStatements(...)</button>
               </details>
 
             </details>
