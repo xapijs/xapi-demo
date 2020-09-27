@@ -85,6 +85,8 @@ input[type="submit"] {
     display: block;
     width: 100%;
     padding: 8px 10px;
+    margin-left: 0;
+    margin-right: 0;
   }
 }
   
@@ -125,10 +127,31 @@ form {
   margin: 0.5rem;
 }
 
+@media (max-width: 768px) {
+  form {
+    margin: 0;
+  }
+}
+
 label {
   display: grid;
   grid-template-columns: 1fr 2fr;
   margin-bottom: 1rem;
+}
+
+@media (max-width: 768px) {
+  label {
+    display: block;
+    grid-template-columns: none;
+  }
+
+  label input,
+  label select {
+    display: block;
+    width: 100%;
+    margin-top: 0.5rem;
+    box-sizing: border-box;
+  }
 }
 
 textarea {

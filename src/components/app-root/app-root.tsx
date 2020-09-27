@@ -15,6 +15,8 @@ export class AppRoot {
   @State() agentValue: string = "";
   @State() statementIdValue: string = "";
   @State() attachmentsValue: boolean = false;
+  @State() voidedStatementIdValue: string = "";
+  @State() voidedAttachmentsValue: boolean = false;
   @State() consoleText: string = "";
 
   @State() xapi: XAPI;
@@ -81,7 +83,14 @@ export class AppRoot {
     this.xapi.getStatement({
       statementId: this.statementIdValue,
       attachments: this.attachmentsValue
-    })
+    });
+  }
+
+  getVoidedStatement() {
+    this.xapi.getVoidedStatement({
+      voidedStatementId: this.voidedStatementIdValue,
+      attachments: this.voidedAttachmentsValue
+    });
   }
 
   addToConsole(label: string, output: string) {
@@ -182,6 +191,8 @@ export class AppRoot {
               <summary>
                 <h3>Statement Resource</h3>
               </summary>
+
+              {/* Get Statement */}
               <details open>
                 <summary>
                   <h4>Get Statement</h4>
@@ -206,6 +217,33 @@ export class AppRoot {
                 </label>
                 <button onClick={() => this.getStatement()} disabled={!this.xapi || !this.statementIdValue}>getStatement(...)</button>
               </details>
+
+              {/* Get Voided Statement */}
+              <details>
+                <summary>
+                  <h4>Get Voided Statement</h4>
+                </summary>
+                <label>
+                  voidedStatementId
+                  <input
+                    type="text"
+                    value={this.voidedStatementIdValue}
+                    onInput={(e) => this.voidedStatementIdValue = (e.target as HTMLInputElement).value}
+                    autoCorrect={"false"}
+                    autoCapitalize={"false"}
+                  />
+                </label>
+                <label>
+                  attachments
+                  <input
+                    type="checkbox"
+                    checked={this.voidedAttachmentsValue}
+                    onInput={(e) => this.voidedAttachmentsValue = (e.target as HTMLInputElement).checked}
+                  />
+                </label>
+                <button onClick={() => this.getVoidedStatement()} disabled={!this.xapi || !this.voidedStatementIdValue}>getVoidedStatement(...)</button>
+              </details>
+
             </details>
           </div>
 
