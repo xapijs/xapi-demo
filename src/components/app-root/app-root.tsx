@@ -40,6 +40,8 @@ export class AppRoot {
 
   @State() getMoreStatementsMoreValue: string = "";
 
+  @State() sendStatementStatementValue: string = "";
+
   @State() consoleText: string = "";
 
 
@@ -159,6 +161,16 @@ export class AppRoot {
       })
       .catch((error) => {
         this.addToConsole('getMoreStatements()', JSON.stringify(error, null, 2));
+      });
+  }
+
+  sendStatement() {
+    this.xapi.sendStatement(JSON.parse(this.sendStatementStatementValue))
+      .then((result) => {
+        this.addToConsole('sendStatement()', JSON.stringify(result.data, null, 2));
+      })
+      .catch((error) => {
+        this.addToConsole('sendStatement()', JSON.stringify(error, null, 2));
       });
   }
 
@@ -478,6 +490,23 @@ export class AppRoot {
                   />
                 </label>
                 <button onClick={() => this.getMoreStatements()} disabled={!this.xapi || !this.getMoreStatementsMoreValue}>getMoreStatements(...)</button>
+              </details>
+
+              {/* Send Statement */}
+              <details>
+                <summary>
+                  <h4>Send Statement</h4>
+                </summary>
+                <label>
+                  statement
+                  <textarea
+                    value={this.sendStatementStatementValue}
+                    onInput={(e) => this.sendStatementStatementValue = (e.target as HTMLTextAreaElement).value}
+                    rows={10}
+                    placeholder="{...}"
+                  ></textarea>
+                </label>
+                <button onClick={() => this.sendStatement()} disabled={!this.xapi}>sendStatement(...)</button>
               </details>
 
             </details>
