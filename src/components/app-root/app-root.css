@@ -1,7 +1,18 @@
+html {
+  height: 100%;
+}
+
 body {
   margin: 0px;
   padding: 0px;
   font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
+  overflow: hidden;
+  height: 100%;
+}
+
+app-root {
+  display: block;
+  height: 100%;
 }
 
 header {
@@ -21,14 +32,41 @@ h1 {
 }
 
 main {
-  padding: 10px;
+  position: absolute;
+  top: 56px;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+@media (max-width: 768px) {
+  main {
+    grid-template-columns: auto;
+    grid-template-rows: 1fr 1fr;
+  }
+}
+
+.controls {
+  padding: 1rem;
+  overflow-y: scroll;
+}
+
+pre {
+  display: block;
+  background-color: #EEEEEE;
+  padding: 2rem;
+  margin: 0;
+  overflow-y: scroll;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
 }
 
 button,
 input[type="submit"] {
   background: #5851ff;
   color: white;
-  margin: 8px;
+  margin-bottom: 1rem;
   border: none;
   font-size: 13px;
   font-weight: 700;
@@ -39,6 +77,16 @@ input[type="submit"] {
   letter-spacing: .04em;
   transition: all .15s ease;
   cursor: pointer;
+  margin-right: 1rem;
+}
+
+@media (max-width: 768px) {
+  button,
+  input[type="submit"] {
+    display: block;
+    width: 100%;
+    padding: 8px 10px;
+  }
 }
   
 button:hover:not(:disabled),
@@ -55,16 +103,19 @@ input[type="submit"]:disabled {
   cursor: not-allowed;
 }
 
-pre {
-  position: fixed;
-  bottom: 0;
-  right: 0;
-  left: 0;
-  height: 40vh;
-  background-color: #EEEEEE;
-  padding: 2rem;
-  margin: 0;
-  overflow-y: scroll;
+summary > * {
+  display: inline-block;
+}
+
+label {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  margin-bottom: 1rem;
+}
+
+textarea {
+  width: 100%;
+  display: block;
   box-sizing: border-box;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+  margin-bottom: 1rem;
 }
