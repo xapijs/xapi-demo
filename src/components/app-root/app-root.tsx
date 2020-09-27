@@ -42,6 +42,9 @@ export class AppRoot {
 
   @State() sendStatementStatementValue: string = "";
 
+  @State() voidStatementActorValue: string = "";
+  @State() voidStatementIdValue: string = "";
+
   @State() consoleText: string = "";
 
 
@@ -174,6 +177,19 @@ export class AppRoot {
       });
   }
 
+  voidStatement() {
+    this.xapi.voidStatement(
+      JSON.parse(this.voidStatementActorValue),
+      this.voidStatementIdValue
+    )
+      .then((result) => {
+        this.addToConsole('voidStatement()', JSON.stringify(result.data, null, 2));
+      })
+      .catch((error) => {
+        this.addToConsole('voidStatement()', JSON.stringify(error, null, 2));
+      });
+  }
+
   addToConsole(label: string, output: string) {
     this.consoleText += `\\\\ ${label}\n\n`;
     this.consoleText += output;
@@ -277,7 +293,7 @@ export class AppRoot {
               <details>
                 <summary>
                   <h4>Get Statement</h4>
-                  </summary>
+                </summary>
                 <label>
                   statementId
                   <input
@@ -507,6 +523,33 @@ export class AppRoot {
                   ></textarea>
                 </label>
                 <button onClick={() => this.sendStatement()} disabled={!this.xapi}>sendStatement(...)</button>
+              </details>
+
+              {/* Void Statement */}
+              <details>
+                <summary>
+                  <h4>Void Statement</h4>
+                </summary>
+                <label>
+                  actor
+                  <textarea
+                    value={this.voidStatementActorValue}
+                    onInput={(e) => this.voidStatementActorValue = (e.target as HTMLTextAreaElement).value}
+                    rows={8}
+                    placeholder="{...}"
+                  ></textarea>
+                </label>
+                <label>
+                  statementId
+                  <input
+                    type="text"
+                    value={this.voidStatementIdValue}
+                    onInput={(e) => this.voidStatementIdValue = (e.target as HTMLInputElement).value}
+                    autoCorrect={"false"}
+                    autoCapitalize={"false"}
+                  />
+                </label>
+                <button onClick={() => this.voidStatement()} disabled={!this.xapi || !this.voidStatementActorValue || !this.voidStatementIdValue}>voidStatement(...)</button>
               </details>
 
             </details>
