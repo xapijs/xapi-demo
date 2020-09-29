@@ -126,6 +126,13 @@ details {
   padding: 1rem;
 }
 
+summary {
+  margin: -1rem;
+  padding: 1rem;
+  outline: none;
+  cursor: pointer;
+}
+
 details + details {
   margin-top: 1rem;
 }

@@ -45,6 +45,42 @@ export class AppRoot {
   @State() voidStatementActorValue: string = "";
   @State() voidStatementIdValue: string = "";
 
+  @State() getStatesAgentValue: string = "";
+  @State() getStatesActivityValue: string = "";
+  @State() getStatesRegistrationValue: string = "";
+
+  @State() getStateAgentValue: string = "";
+  @State() getStateActivityValue: string = "";
+  @State() getStateStateIdValue: string = "";
+  @State() getStateRegistrationValue: string = "";
+
+  @State() createStateAgentValue: string = "";
+  @State() createStateActivityValue: string = "";
+  @State() createStateStateIdValue: string = "";
+  @State() createStateStateValue: string = "";
+  @State() createStateRegistrationValue: string = "";
+  @State() createStateETagValue: string = "";
+  @State() createStateETagHeaderValue: string = "";
+
+  @State() setStateAgentValue: string = "";
+  @State() setStateActivityValue: string = "";
+  @State() setStateStateIdValue: string = "";
+  @State() setStateStateValue: string = "";
+  @State() setStateRegistrationValue: string = "";
+  @State() setStateETagValue: string = "";
+  @State() setStateETagHeaderValue: string = "";
+
+  @State() deleteStateAgentValue: string = "";
+  @State() deleteStateActivityValue: string = "";
+  @State() deleteStateStateIdValue: string = "";
+  @State() deleteStateRegistrationValue: string = "";
+  @State() deleteStateETagValue: string = "";
+
+  @State() deleteStatesAgentValue: string = "";
+  @State() deleteStatesActivityValue: string = "";
+  @State() deleteStatesRegistrationValue: string = "";
+  @State() deleteStatesETagValue: string = "";
+
   @State() consoleText: string = "";
 
 
@@ -187,6 +223,103 @@ export class AppRoot {
       })
       .catch((error) => {
         this.addToConsole('voidStatement()', JSON.stringify(error, null, 2));
+      });
+  }
+
+  getStates() {
+    this.xapi.getStates(
+      JSON.parse(this.getStatesAgentValue),
+      this.getStatesActivityValue,
+      this.getStatesRegistrationValue
+    )
+      .then((result) => {
+        this.addToConsole('getStates()', JSON.stringify(result.data, null, 2));
+      })
+      .catch((error) => {
+        this.addToConsole('getStates()', JSON.stringify(error, null, 2));
+      });
+  }
+
+  getState() {
+    this.xapi.getState(
+      JSON.parse(this.getStateAgentValue),
+      this.getStateActivityValue,
+      this.getStateStateIdValue,
+      this.getStateRegistrationValue
+    )
+      .then((result) => {
+        this.addToConsole('getStates() >> headers.etag:', result.headers.etag);
+        this.addToConsole('getState()', JSON.stringify(result.data, null, 2));
+      })
+      .catch((error) => {
+        this.addToConsole('getState()', JSON.stringify(error, null, 2));
+      });
+  }
+
+  createState() {
+    this.xapi.createState(
+      JSON.parse(this.createStateAgentValue),
+      this.createStateActivityValue,
+      this.createStateStateIdValue,
+      JSON.parse(this.createStateStateValue),
+      this.createStateRegistrationValue,
+      this.createStateETagValue,
+      this.createStateETagHeaderValue as any
+    )
+      .then((result) => {
+        this.addToConsole('createState()', JSON.stringify(result.data, null, 2));
+      })
+      .catch((error) => {
+        this.addToConsole('createState()', JSON.stringify(error, null, 2));
+      });
+  }
+
+  setState() {
+    this.xapi.setState(
+      JSON.parse(this.setStateAgentValue),
+      this.setStateActivityValue,
+      this.setStateStateIdValue,
+      JSON.parse(this.setStateStateValue),
+      this.setStateRegistrationValue,
+      this.setStateETagValue,
+      this.setStateETagHeaderValue as any
+    )
+      .then((result) => {
+        this.addToConsole('setState()', JSON.stringify(result.data, null, 2));
+      })
+      .catch((error) => {
+        this.addToConsole('setState()', JSON.stringify(error, null, 2));
+      });
+  }
+
+  deleteState() {
+    this.xapi.deleteState(
+      JSON.parse(this.deleteStateAgentValue),
+      this.deleteStateActivityValue,
+      this.deleteStateStateIdValue,
+      this.deleteStateRegistrationValue,
+      this.deleteStateETagValue
+    )
+      .then((result) => {
+        this.addToConsole('deleteState()', JSON.stringify(result.data, null, 2));
+      })
+      .catch((error) => {
+        this.addToConsole('deleteState()', JSON.stringify(error, null, 2));
+      });
+  }
+
+  deleteStates() {
+    this.xapi.deleteStates(
+      JSON.parse(this.deleteStatesAgentValue),
+      this.deleteStatesActivityValue,
+      this.deleteStatesRegistrationValue,
+      this.deleteStatesETagValue
+    )
+      .then((result) => {
+        this.addToConsole('deleteStates()', JSON.stringify(result.data, null, 2));
+      })
+      .catch((error) => {
+        this.addToConsole('deleteStates()', JSON.stringify(error, null, 2));
       });
   }
 
@@ -552,7 +685,361 @@ export class AppRoot {
                 </label>
                 <button onClick={() => this.voidStatement()} disabled={!this.xapi || !this.voidStatementActorValue || !this.voidStatementIdValue}>voidStatement(...)</button>
               </details>
+            </details>
 
+            {/* State Resource */}
+            <details>
+              <summary>
+                <h3>State Resource</h3>
+              </summary>
+
+              {/* Get States */}
+              <details open>
+                <summary>
+                  <h4>Get States</h4>
+                </summary>
+                <label>
+                  agent
+                  <textarea
+                    value={this.getStatesAgentValue}
+                    onInput={(e) => this.getStatesAgentValue = (e.target as HTMLTextAreaElement).value}
+                    rows={8}
+                    placeholder="{...}"
+                  ></textarea>
+                </label>
+                <label>
+                  activity
+                  <input
+                    type="text"
+                    value={this.getStatesActivityValue}
+                    placeholder="https://www.xapijs.dev/activity/xapijs/xapi-demo"
+                    onInput={(e) => this.getStatesActivityValue = (e.target as HTMLInputElement).value}
+                    autoCorrect={"false"}
+                    autoCapitalize={"false"}
+                  />
+                </label>
+                <label>
+                  registration
+                  <input
+                    type="text"
+                    value={this.getStatesRegistrationValue}
+                    onInput={(e) => this.getStatesRegistrationValue = (e.target as HTMLInputElement).value}
+                    autoCorrect={"false"}
+                    autoCapitalize={"false"}
+                  />
+                </label>
+                <button onClick={() => this.getStates()} disabled={!this.xapi || !this.getStatesAgentValue || !this.getStatesActivityValue}>getStates(...)</button>
+              </details>
+
+              {/* Get State */}
+              <details>
+                <summary>
+                  <h4>Get State</h4>
+                </summary>
+                <label>
+                  agent
+                  <textarea
+                    value={this.getStateAgentValue}
+                    onInput={(e) => this.getStateAgentValue = (e.target as HTMLTextAreaElement).value}
+                    rows={8}
+                    placeholder="{...}"
+                  ></textarea>
+                </label>
+                <label>
+                  activity
+                  <input
+                    type="text"
+                    value={this.getStateActivityValue}
+                    placeholder="https://www.xapijs.dev/activity/xapijs/xapi-demo"
+                    onInput={(e) => this.getStateActivityValue = (e.target as HTMLInputElement).value}
+                    autoCorrect={"false"}
+                    autoCapitalize={"false"}
+                  />
+                </label>
+                <label>
+                  stateId
+                  <input
+                    type="text"
+                    value={this.getStateStateIdValue}
+                    onInput={(e) => this.getStateStateIdValue = (e.target as HTMLInputElement).value}
+                    autoCorrect={"false"}
+                    autoCapitalize={"false"}
+                  />
+                </label>
+                <label>
+                  registration
+                  <input
+                    type="text"
+                    value={this.getStateRegistrationValue}
+                    onInput={(e) => this.getStateRegistrationValue = (e.target as HTMLInputElement).value}
+                    autoCorrect={"false"}
+                    autoCapitalize={"false"}
+                  />
+                </label>
+                <button onClick={() => this.getState()} disabled={!this.xapi || !this.getStateAgentValue || !this.getStateActivityValue || !this.getStateStateIdValue}>getState(...)</button>
+              </details>
+
+              {/* Create State */}
+              <details>
+                <summary>
+                  <h4>Create State</h4>
+                </summary>
+                <label>
+                  agent
+                  <textarea
+                    value={this.createStateAgentValue}
+                    onInput={(e) => this.createStateAgentValue = (e.target as HTMLTextAreaElement).value}
+                    rows={8}
+                    placeholder="{...}"
+                  ></textarea>
+                </label>
+                <label>
+                  activity
+                  <input
+                    type="text"
+                    value={this.createStateActivityValue}
+                    placeholder="https://www.xapijs.dev/activity/xapijs/xapi-demo"
+                    onInput={(e) => this.createStateActivityValue = (e.target as HTMLInputElement).value}
+                    autoCorrect={"false"}
+                    autoCapitalize={"false"}
+                  />
+                </label>
+                <label>
+                  stateId
+                  <input
+                    type="text"
+                    value={this.createStateStateIdValue}
+                    onInput={(e) => this.createStateStateIdValue = (e.target as HTMLInputElement).value}
+                    autoCorrect={"false"}
+                    autoCapitalize={"false"}
+                  />
+                </label>
+                <label>
+                  state
+                  <textarea
+                    value={this.createStateStateValue}
+                    onInput={(e) => this.createStateStateValue = (e.target as HTMLTextAreaElement).value}
+                    rows={8}
+                    placeholder="{...}"
+                  ></textarea>
+                </label>
+                <label>
+                  registration
+                  <input
+                    type="text"
+                    value={this.createStateRegistrationValue}
+                    onInput={(e) => this.createStateRegistrationValue = (e.target as HTMLInputElement).value}
+                    autoCorrect={"false"}
+                    autoCapitalize={"false"}
+                  />
+                </label>
+                <label>
+                  ETag
+                  <input
+                    type="text"
+                    value={this.createStateETagValue}
+                    onInput={(e) => this.createStateETagValue = (e.target as HTMLInputElement).value}
+                    autoCorrect={"false"}
+                    autoCapitalize={"false"}
+                  />
+                </label>
+                <label>
+                  ETag Header
+                  <select onChange={(e) => {
+                    const target = e.target as HTMLSelectElement;
+                    this.createStateETagHeaderValue = target.options[target.selectedIndex].value;
+                  }}>
+                    <option value=""></option>
+                    <option value="If-Match">If-Match</option>
+                    <option value="If-None-Match">If-None-Match</option>
+                  </select>
+                </label>
+                <button onClick={() => this.createState()} disabled={!this.xapi || !this.createStateAgentValue || !this.createStateActivityValue || !this.createStateStateIdValue || !this.createStateStateValue}>createState(...)</button>
+              </details>
+
+              {/* Set State */}
+              <details>
+                <summary>
+                  <h4>Set State</h4>
+                </summary>
+                <label>
+                  agent
+                  <textarea
+                    value={this.setStateAgentValue}
+                    onInput={(e) => this.setStateAgentValue = (e.target as HTMLTextAreaElement).value}
+                    rows={8}
+                    placeholder="{...}"
+                  ></textarea>
+                </label>
+                <label>
+                  activity
+                  <input
+                    type="text"
+                    value={this.setStateActivityValue}
+                    placeholder="https://www.xapijs.dev/activity/xapijs/xapi-demo"
+                    onInput={(e) => this.setStateActivityValue = (e.target as HTMLInputElement).value}
+                    autoCorrect={"false"}
+                    autoCapitalize={"false"}
+                  />
+                </label>
+                <label>
+                  stateId
+                  <input
+                    type="text"
+                    value={this.setStateStateIdValue}
+                    onInput={(e) => this.setStateStateIdValue = (e.target as HTMLInputElement).value}
+                    autoCorrect={"false"}
+                    autoCapitalize={"false"}
+                  />
+                </label>
+                <label>
+                  state
+                  <textarea
+                    value={this.setStateStateValue}
+                    onInput={(e) => this.setStateStateValue = (e.target as HTMLTextAreaElement).value}
+                    rows={8}
+                    placeholder="{...}"
+                  ></textarea>
+                </label>
+                <label>
+                  registration
+                  <input
+                    type="text"
+                    value={this.setStateRegistrationValue}
+                    onInput={(e) => this.setStateRegistrationValue = (e.target as HTMLInputElement).value}
+                    autoCorrect={"false"}
+                    autoCapitalize={"false"}
+                  />
+                </label>
+                <label>
+                  ETag
+                  <input
+                    type="text"
+                    value={this.setStateETagValue}
+                    onInput={(e) => this.setStateETagValue = (e.target as HTMLInputElement).value}
+                    autoCorrect={"false"}
+                    autoCapitalize={"false"}
+                  />
+                </label>
+                <label>
+                  ETag Header
+                  <select onChange={(e) => {
+                    const target = e.target as HTMLSelectElement;
+                    this.setStateETagHeaderValue = target.options[target.selectedIndex].value;
+                  }}>
+                    <option value=""></option>
+                    <option value="If-Match">If-Match</option>
+                    <option value="If-None-Match">If-None-Match</option>
+                  </select>
+                </label>
+                <button onClick={() => this.setState()} disabled={!this.xapi || !this.setStateAgentValue || !this.setStateActivityValue || !this.setStateStateIdValue || !this.setStateStateValue}>setState(...)</button>
+              </details>
+
+              {/* Delete State */}
+              <details>
+                <summary>
+                  <h4>Delete State</h4>
+                </summary>
+                <label>
+                  agent
+                  <textarea
+                    value={this.deleteStateAgentValue}
+                    onInput={(e) => this.deleteStateAgentValue = (e.target as HTMLTextAreaElement).value}
+                    rows={8}
+                    placeholder="{...}"
+                  ></textarea>
+                </label>
+                <label>
+                  activity
+                  <input
+                    type="text"
+                    value={this.deleteStateActivityValue}
+                    placeholder="https://www.xapijs.dev/activity/xapijs/xapi-demo"
+                    onInput={(e) => this.deleteStateActivityValue = (e.target as HTMLInputElement).value}
+                    autoCorrect={"false"}
+                    autoCapitalize={"false"}
+                  />
+                </label>
+                <label>
+                  stateId
+                  <input
+                    type="text"
+                    value={this.deleteStateStateIdValue}
+                    onInput={(e) => this.deleteStateStateIdValue = (e.target as HTMLInputElement).value}
+                    autoCorrect={"false"}
+                    autoCapitalize={"false"}
+                  />
+                </label>
+                <label>
+                  registration
+                  <input
+                    type="text"
+                    value={this.deleteStateRegistrationValue}
+                    onInput={(e) => this.deleteStateRegistrationValue = (e.target as HTMLInputElement).value}
+                    autoCorrect={"false"}
+                    autoCapitalize={"false"}
+                  />
+                </label>
+                <label>
+                  ETag
+                  <input
+                    type="text"
+                    value={this.deleteStateETagValue}
+                    onInput={(e) => this.deleteStateETagValue = (e.target as HTMLInputElement).value}
+                    autoCorrect={"false"}
+                    autoCapitalize={"false"}
+                  />
+                </label>
+                <button onClick={() => this.deleteState()} disabled={!this.xapi || !this.deleteStateAgentValue || !this.deleteStateActivityValue || !this.deleteStateStateIdValue}>deleteState(...)</button>
+              </details>
+
+              {/* Delete States */}
+              <details>
+                <summary>
+                  <h4>Delete States</h4>
+                </summary>
+                <label>
+                  agent
+                  <textarea
+                    value={this.deleteStatesAgentValue}
+                    onInput={(e) => this.deleteStatesAgentValue = (e.target as HTMLTextAreaElement).value}
+                    rows={8}
+                    placeholder="{...}"
+                  ></textarea>
+                </label>
+                <label>
+                  activity
+                  <input
+                    type="text"
+                    value={this.deleteStatesActivityValue}
+                    placeholder="https://www.xapijs.dev/activity/xapijs/xapi-demo"
+                    onInput={(e) => this.deleteStatesActivityValue = (e.target as HTMLInputElement).value}
+                    autoCorrect={"false"}
+                    autoCapitalize={"false"}
+                  />
+                </label>
+                <label>
+                  registration
+                  <input
+                    type="text"
+                    value={this.deleteStatesRegistrationValue}
+                    onInput={(e) => this.deleteStatesRegistrationValue = (e.target as HTMLInputElement).value}
+                    autoCorrect={"false"}
+                    autoCapitalize={"false"}
+                  />
+                </label>
+                <label>
+                  ETag
+                  <input
+                    type="text"
+                    value={this.deleteStatesETagValue}
+                    onInput={(e) => this.deleteStatesETagValue = (e.target as HTMLInputElement).value}
+                    autoCorrect={"false"}
+                    autoCapitalize={"false"}
+                  />
+                </label>
+                <button onClick={() => this.deleteStates()} disabled={!this.xapi || !this.deleteStatesAgentValue || !this.deleteStatesActivityValue}>deleteStates(...)</button>
+              </details>
             </details>
           </div>
 
