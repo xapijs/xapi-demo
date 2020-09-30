@@ -102,6 +102,8 @@ export class AppRoot {
   @State() deleteAgentProfileProfileIdValue: string = "";
   @State() deleteAgentProfileETagValue: string = "";
 
+  @State() getActivityActivityValue: string = "";
+
   @State() consoleText: string = "";
 
 
@@ -413,6 +415,18 @@ export class AppRoot {
       })
       .catch((error) => {
         this.addToConsole('deleteAgentProfile()', JSON.stringify(error, null, 2));
+      });
+  }
+
+  getActivity() {
+    this.xapi.getActivity(
+      this.getActivityActivityValue
+    )
+      .then((result) => {
+        this.addToConsole('getActivity()', JSON.stringify(result.data, null, 2));
+      })
+      .catch((error) => {
+        this.addToConsole('getActivity()', JSON.stringify(error, null, 2));
       });
   }
 
@@ -1335,6 +1349,32 @@ export class AppRoot {
                   />
                 </label>
                 <button onClick={() => this.deleteAgentProfile()} disabled={!this.xapi || !this.deleteAgentProfileAgentValue || !this.deleteAgentProfileProfileIdValue}>deleteAgentProfile(...)</button>
+              </details>
+            </details>
+
+            {/* Activities Resource */}
+            <details>
+              <summary>
+                <h3>Activities Resource</h3>
+              </summary>
+
+              {/* Get Activity */}
+              <details open>
+                <summary>
+                  <h4>Get Activity</h4>
+                </summary>
+                <label>
+                  activity
+                  <input
+                    type="text"
+                    value={this.getActivityActivityValue}
+                    placeholder="https://www.xapijs.dev/activity/xapijs/xapi-demo"
+                    onInput={(e) => this.getActivityActivityValue = (e.target as HTMLInputElement).value}
+                    autoCorrect={"false"}
+                    autoCapitalize={"false"}
+                  />
+                </label>
+                <button onClick={() => this.getActivity()} disabled={!this.xapi || !this.getActivityActivityValue}>getActivity(...)</button>
               </details>
             </details>
           </div>
