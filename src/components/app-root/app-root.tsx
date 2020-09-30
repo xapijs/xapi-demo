@@ -81,6 +81,27 @@ export class AppRoot {
   @State() deleteStatesRegistrationValue: string = "";
   @State() deleteStatesETagValue: string = "";
 
+  @State() getAgentProfilesAgentValue: string = "";
+
+  @State() getAgentProfileAgentValue: string = "";
+  @State() getAgentProfileProfileIdValue: string = "";
+
+  @State() createAgentProfileAgentValue: string = "";
+  @State() createAgentProfileProfileIdValue: string = "";
+  @State() createAgentProfileProfileValue: string = "";
+  @State() createAgentProfileETagValue: string = "";
+  @State() createAgentProfileETagHeaderValue: string = "";
+
+  @State() setAgentProfileAgentValue: string = "";
+  @State() setAgentProfileProfileIdValue: string = "";
+  @State() setAgentProfileProfileValue: string = "";
+  @State() setAgentProfileETagValue: string = "";
+  @State() setAgentProfileETagHeaderValue: string = "";
+
+  @State() deleteAgentProfileAgentValue: string = "";
+  @State() deleteAgentProfileProfileIdValue: string = "";
+  @State() deleteAgentProfileETagValue: string = "";
+
   @State() consoleText: string = "";
 
 
@@ -320,6 +341,78 @@ export class AppRoot {
       })
       .catch((error) => {
         this.addToConsole('deleteStates()', JSON.stringify(error, null, 2));
+      });
+  }
+
+  getAgentProfiles() {
+    this.xapi.getAgentProfiles(
+      JSON.parse(this.getAgentProfilesAgentValue),
+    )
+      .then((result) => {
+        this.addToConsole('getAgentProfiles()', JSON.stringify(result.data, null, 2));
+      })
+      .catch((error) => {
+        this.addToConsole('getAgentProfiles()', JSON.stringify(error, null, 2));
+      });
+  }
+
+  getAgentProfile() {
+    this.xapi.getAgentProfile(
+      JSON.parse(this.getAgentProfileAgentValue),
+      this.getAgentProfileProfileIdValue,
+    )
+      .then((result) => {
+        this.addToConsole('getAgentProfile() >> headers.etag:', result.headers.etag);
+        this.addToConsole('getAgentProfile()', JSON.stringify(result.data, null, 2));
+      })
+      .catch((error) => {
+        this.addToConsole('getAgentProfile()', JSON.stringify(error, null, 2));
+      });
+  }
+
+  createAgentProfile() {
+    this.xapi.createAgentProfile(
+      JSON.parse(this.createAgentProfileAgentValue),
+      this.createAgentProfileProfileIdValue,
+      JSON.parse(this.createAgentProfileProfileValue),
+      this.createAgentProfileETagValue,
+      this.createAgentProfileETagHeaderValue as any
+    )
+      .then((result) => {
+        this.addToConsole('createAgentProfile()', JSON.stringify(result.data, null, 2));
+      })
+      .catch((error) => {
+        this.addToConsole('createAgentProfile()', JSON.stringify(error, null, 2));
+      });
+  }
+
+  setAgentProfile() {
+    this.xapi.setAgentProfile(
+      JSON.parse(this.setAgentProfileAgentValue),
+      this.setAgentProfileProfileIdValue,
+      JSON.parse(this.setAgentProfileProfileValue),
+      this.setAgentProfileETagValue,
+      this.setAgentProfileETagHeaderValue as any
+    )
+      .then((result) => {
+        this.addToConsole('setAgentProfile()', JSON.stringify(result.data, null, 2));
+      })
+      .catch((error) => {
+        this.addToConsole('setAgentProfile()', JSON.stringify(error, null, 2));
+      });
+  }
+
+  deleteAgentProfile() {
+    this.xapi.deleteAgentProfile(
+      JSON.parse(this.deleteAgentProfileAgentValue),
+      this.deleteAgentProfileProfileIdValue,
+      this.deleteAgentProfileETagValue
+    )
+      .then((result) => {
+        this.addToConsole('deleteAgentProfile()', JSON.stringify(result.data, null, 2));
+      })
+      .catch((error) => {
+        this.addToConsole('deleteAgentProfile()', JSON.stringify(error, null, 2));
       });
   }
 
@@ -1039,6 +1132,209 @@ export class AppRoot {
                   />
                 </label>
                 <button onClick={() => this.deleteStates()} disabled={!this.xapi || !this.deleteStatesAgentValue || !this.deleteStatesActivityValue}>deleteStates(...)</button>
+              </details>
+            </details>
+
+
+            {/* Agent Profile Resource */}
+            <details>
+              <summary>
+                <h3>Agent Profile Resource</h3>
+              </summary>
+
+              {/* Get Agent Profiles */}
+              <details open>
+                <summary>
+                  <h4>Get Agent Profiles</h4>
+                </summary>
+                <label>
+                  agent
+                  <textarea
+                    value={this.getAgentProfilesAgentValue}
+                    onInput={(e) => this.getAgentProfilesAgentValue = (e.target as HTMLTextAreaElement).value}
+                    rows={8}
+                    placeholder="{...}"
+                  ></textarea>
+                </label>
+                <button onClick={() => this.getAgentProfiles()} disabled={!this.xapi || !this.getAgentProfilesAgentValue}>getAgentProfiles(...)</button>
+              </details>
+
+              {/* Get Agent Profile */}
+              <details>
+                <summary>
+                  <h4>Get Agent Profile</h4>
+                </summary>
+                <label>
+                  agent
+                  <textarea
+                    value={this.getAgentProfileAgentValue}
+                    onInput={(e) => this.getAgentProfileAgentValue = (e.target as HTMLTextAreaElement).value}
+                    rows={8}
+                    placeholder="{...}"
+                  ></textarea>
+                </label>
+                <label>
+                  profileId
+                  <input
+                    type="text"
+                    value={this.getAgentProfileProfileIdValue}
+                    onInput={(e) => this.getAgentProfileProfileIdValue = (e.target as HTMLInputElement).value}
+                    autoCorrect={"false"}
+                    autoCapitalize={"false"}
+                  />
+                </label>
+                <button onClick={() => this.getAgentProfile()} disabled={!this.xapi || !this.getAgentProfileAgentValue || !this.getAgentProfileProfileIdValue}>getAgentProfile(...)</button>
+              </details>
+
+              {/* Create Agent Profile */}
+              <details>
+                <summary>
+                  <h4>Create Agent Profile</h4>
+                </summary>
+                <label>
+                  agent
+                  <textarea
+                    value={this.createAgentProfileAgentValue}
+                    onInput={(e) => this.createAgentProfileAgentValue = (e.target as HTMLTextAreaElement).value}
+                    rows={8}
+                    placeholder="{...}"
+                  ></textarea>
+                </label>
+                <label>
+                  profileId
+                  <input
+                    type="text"
+                    value={this.createAgentProfileProfileIdValue}
+                    onInput={(e) => this.createAgentProfileProfileIdValue = (e.target as HTMLInputElement).value}
+                    autoCorrect={"false"}
+                    autoCapitalize={"false"}
+                  />
+                </label>
+                <label>
+                  profile
+                  <textarea
+                    value={this.createAgentProfileProfileValue}
+                    onInput={(e) => this.createAgentProfileProfileValue = (e.target as HTMLTextAreaElement).value}
+                    rows={8}
+                    placeholder="{...}"
+                  ></textarea>
+                </label>
+                <label>
+                  ETag
+                  <input
+                    type="text"
+                    value={this.createAgentProfileETagValue}
+                    onInput={(e) => this.createAgentProfileETagValue = (e.target as HTMLInputElement).value}
+                    autoCorrect={"false"}
+                    autoCapitalize={"false"}
+                  />
+                </label>
+                <label>
+                  ETag Header
+                  <select onChange={(e) => {
+                    const target = e.target as HTMLSelectElement;
+                    this.createAgentProfileETagHeaderValue = target.options[target.selectedIndex].value;
+                  }}>
+                    <option value=""></option>
+                    <option value="If-Match">If-Match</option>
+                    <option value="If-None-Match">If-None-Match</option>
+                  </select>
+                </label>
+                <button onClick={() => this.createAgentProfile()} disabled={!this.xapi || !this.createAgentProfileAgentValue || !this.createAgentProfileProfileIdValue || !this.createAgentProfileProfileValue}>createAgentProfile(...)</button>
+              </details>
+
+              {/* Set Agent Profile */}
+              <details>
+                <summary>
+                  <h4>Set Agent Profile</h4>
+                </summary>
+                <label>
+                  agent
+                  <textarea
+                    value={this.setAgentProfileAgentValue}
+                    onInput={(e) => this.setAgentProfileAgentValue = (e.target as HTMLTextAreaElement).value}
+                    rows={8}
+                    placeholder="{...}"
+                  ></textarea>
+                </label>
+                <label>
+                  profileId
+                  <input
+                    type="text"
+                    value={this.setAgentProfileProfileIdValue}
+                    onInput={(e) => this.setAgentProfileProfileIdValue = (e.target as HTMLInputElement).value}
+                    autoCorrect={"false"}
+                    autoCapitalize={"false"}
+                  />
+                </label>
+                <label>
+                  profile
+                  <textarea
+                    value={this.setAgentProfileProfileValue}
+                    onInput={(e) => this.setAgentProfileProfileValue = (e.target as HTMLTextAreaElement).value}
+                    rows={8}
+                    placeholder="{...}"
+                  ></textarea>
+                </label>
+                <label>
+                  ETag
+                  <input
+                    type="text"
+                    value={this.setAgentProfileETagValue}
+                    onInput={(e) => this.setAgentProfileETagValue = (e.target as HTMLInputElement).value}
+                    autoCorrect={"false"}
+                    autoCapitalize={"false"}
+                  />
+                </label>
+                <label>
+                  ETag Header
+                  <select onChange={(e) => {
+                    const target = e.target as HTMLSelectElement;
+                    this.setAgentProfileETagHeaderValue = target.options[target.selectedIndex].value;
+                  }}>
+                    <option value=""></option>
+                    <option value="If-Match">If-Match</option>
+                    <option value="If-None-Match">If-None-Match</option>
+                  </select>
+                </label>
+                <button onClick={() => this.setAgentProfile()} disabled={!this.xapi || !this.setAgentProfileAgentValue || !this.setAgentProfileProfileIdValue || !this.setAgentProfileProfileValue || !this.setAgentProfileETagValue || !this.setAgentProfileETagHeaderValue}>setAgentProfile(...)</button>
+              </details>
+
+              {/* Delete Agent Profile */}
+              <details>
+                <summary>
+                  <h4>Delete Agent Profile</h4>
+                </summary>
+                <label>
+                  agent
+                  <textarea
+                    value={this.deleteAgentProfileAgentValue}
+                    onInput={(e) => this.deleteAgentProfileAgentValue = (e.target as HTMLTextAreaElement).value}
+                    rows={8}
+                    placeholder="{...}"
+                  ></textarea>
+                </label>
+                <label>
+                  profileId
+                  <input
+                    type="text"
+                    value={this.deleteAgentProfileProfileIdValue}
+                    onInput={(e) => this.deleteAgentProfileProfileIdValue = (e.target as HTMLInputElement).value}
+                    autoCorrect={"false"}
+                    autoCapitalize={"false"}
+                  />
+                </label>
+                <label>
+                  ETag
+                  <input
+                    type="text"
+                    value={this.deleteAgentProfileETagValue}
+                    onInput={(e) => this.deleteAgentProfileETagValue = (e.target as HTMLInputElement).value}
+                    autoCorrect={"false"}
+                    autoCapitalize={"false"}
+                  />
+                </label>
+                <button onClick={() => this.deleteAgentProfile()} disabled={!this.xapi || !this.deleteAgentProfileAgentValue || !this.deleteAgentProfileProfileIdValue}>deleteAgentProfile(...)</button>
               </details>
             </details>
           </div>
