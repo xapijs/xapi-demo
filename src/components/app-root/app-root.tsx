@@ -102,7 +102,28 @@ export class AppRoot {
   @State() deleteAgentProfileProfileIdValue: string = "";
   @State() deleteAgentProfileETagValue: string = "";
 
-  @State() getActivityActivityValue: string = "";
+  @State() getActivityActivityIdValue: string = "";
+
+  @State() getActivityProfilesActivityIdValue: string = "";
+
+  @State() getActivityProfileActivityIdValue: string = "";
+  @State() getActivityProfileProfileIdValue: string = "";
+
+  @State() createActivityProfileActivityIdValue: string = "";
+  @State() createActivityProfileProfileIdValue: string = "";
+  @State() createActivityProfileProfileValue: string = "";
+  @State() createActivityProfileETagValue: string = "";
+  @State() createActivityProfileETagHeaderValue: string = "";
+
+  @State() setActivityProfileActivityIdValue: string = "";
+  @State() setActivityProfileProfileIdValue: string = "";
+  @State() setActivityProfileProfileValue: string = "";
+  @State() setActivityProfileETagValue: string = "";
+  @State() setActivityProfileETagHeaderValue: string = "";
+
+  @State() deleteActivityProfileActivityIdValue: string = "";
+  @State() deleteActivityProfileProfileIdValue: string = "";
+  @State() deleteActivityProfileETagValue: string = "";
 
   @State() consoleText: string = "";
 
@@ -420,13 +441,85 @@ export class AppRoot {
 
   getActivity() {
     this.xapi.getActivity(
-      this.getActivityActivityValue
+      this.getActivityActivityIdValue
     )
       .then((result) => {
         this.addToConsole('getActivity()', JSON.stringify(result.data, null, 2));
       })
       .catch((error) => {
         this.addToConsole('getActivity()', JSON.stringify(error, null, 2));
+      });
+  }
+
+  getActivityProfiles() {
+    this.xapi.getActivityProfiles(
+      this.getActivityProfilesActivityIdValue,
+    )
+      .then((result) => {
+        this.addToConsole('getActivityProfiles()', JSON.stringify(result.data, null, 2));
+      })
+      .catch((error) => {
+        this.addToConsole('getActivityProfiles()', JSON.stringify(error, null, 2));
+      });
+  }
+
+  getActivityProfile() {
+    this.xapi.getActivityProfile(
+      this.getActivityProfileActivityIdValue,
+      this.getActivityProfileProfileIdValue,
+    )
+      .then((result) => {
+        this.addToConsole('getActivityProfile() >> headers.etag:', result.headers.etag);
+        this.addToConsole('getActivityProfile()', JSON.stringify(result.data, null, 2));
+      })
+      .catch((error) => {
+        this.addToConsole('getActivityProfile()', JSON.stringify(error, null, 2));
+      });
+  }
+
+  createActivityProfile() {
+    this.xapi.createActivityProfile(
+      this.createActivityProfileActivityIdValue,
+      this.createActivityProfileProfileIdValue,
+      JSON.parse(this.createActivityProfileProfileValue),
+      this.createActivityProfileETagValue,
+      this.createActivityProfileETagHeaderValue as any
+    )
+      .then((result) => {
+        this.addToConsole('createActivityProfile()', JSON.stringify(result.data, null, 2));
+      })
+      .catch((error) => {
+        this.addToConsole('createActivityProfile()', JSON.stringify(error, null, 2));
+      });
+  }
+
+  setActivityProfile() {
+    this.xapi.setActivityProfile(
+      this.setActivityProfileActivityIdValue,
+      this.setActivityProfileProfileIdValue,
+      JSON.parse(this.setActivityProfileProfileValue),
+      this.setActivityProfileETagValue,
+      this.setActivityProfileETagHeaderValue as any
+    )
+      .then((result) => {
+        this.addToConsole('setActivityProfile()', JSON.stringify(result.data, null, 2));
+      })
+      .catch((error) => {
+        this.addToConsole('setActivityProfile()', JSON.stringify(error, null, 2));
+      });
+  }
+
+  deleteActivityProfile() {
+    this.xapi.deleteActivityProfile(
+      this.deleteActivityProfileActivityIdValue,
+      this.deleteActivityProfileProfileIdValue,
+      this.deleteActivityProfileETagValue
+    )
+      .then((result) => {
+        this.addToConsole('deleteActivityProfile()', JSON.stringify(result.data, null, 2));
+      })
+      .catch((error) => {
+        this.addToConsole('deleteActivityProfile()', JSON.stringify(error, null, 2));
       });
   }
 
@@ -1149,7 +1242,6 @@ export class AppRoot {
               </details>
             </details>
 
-
             {/* Agent Profile Resource */}
             <details>
               <summary>
@@ -1364,17 +1456,229 @@ export class AppRoot {
                   <h4>Get Activity</h4>
                 </summary>
                 <label>
-                  activity
+                  activityId
                   <input
                     type="text"
-                    value={this.getActivityActivityValue}
+                    value={this.getActivityActivityIdValue}
                     placeholder="https://www.xapijs.dev/activity/xapijs/xapi-demo"
-                    onInput={(e) => this.getActivityActivityValue = (e.target as HTMLInputElement).value}
+                    onInput={(e) => this.getActivityActivityIdValue = (e.target as HTMLInputElement).value}
                     autoCorrect={"false"}
                     autoCapitalize={"false"}
                   />
                 </label>
-                <button onClick={() => this.getActivity()} disabled={!this.xapi || !this.getActivityActivityValue}>getActivity(...)</button>
+                <button onClick={() => this.getActivity()} disabled={!this.xapi || !this.getActivityActivityIdValue}>getActivity(...)</button>
+              </details>
+            </details>
+
+            {/* Activity Profile Resource */}
+            <details>
+              <summary>
+                <h3>Activity Profile Resource</h3>
+              </summary>
+
+              {/* Get Activity Profiles */}
+              <details open>
+                <summary>
+                  <h4>Get Activity Profiles</h4>
+                </summary>
+                <label>
+                  activityId
+                  <input
+                    type="text"
+                    value={this.getActivityProfilesActivityIdValue}
+                    placeholder="https://www.xapijs.dev/activity/xapijs/xapi-demo"
+                    onInput={(e) => this.getActivityProfilesActivityIdValue = (e.target as HTMLInputElement).value}
+                    autoCorrect={"false"}
+                    autoCapitalize={"false"}
+                  />
+                </label>
+                <button onClick={() => this.getActivityProfiles()} disabled={!this.xapi || !this.getActivityProfilesActivityIdValue}>getActivityProfiles(...)</button>
+              </details>
+
+              {/* Get Activity Profile */}
+              <details>
+                <summary>
+                  <h4>Get Activity Profile</h4>
+                </summary>
+                <label>
+                  activityId
+                  <input
+                    type="text"
+                    value={this.getActivityProfileActivityIdValue}
+                    placeholder="https://www.xapijs.dev/activity/xapijs/xapi-demo"
+                    onInput={(e) => this.getActivityProfileActivityIdValue = (e.target as HTMLInputElement).value}
+                    autoCorrect={"false"}
+                    autoCapitalize={"false"}
+                  />
+                </label>
+                <label>
+                  profileId
+                  <input
+                    type="text"
+                    value={this.getActivityProfileProfileIdValue}
+                    onInput={(e) => this.getActivityProfileProfileIdValue = (e.target as HTMLInputElement).value}
+                    autoCorrect={"false"}
+                    autoCapitalize={"false"}
+                  />
+                </label>
+                <button onClick={() => this.getActivityProfile()} disabled={!this.xapi || !this.getActivityProfileActivityIdValue || !this.getActivityProfileProfileIdValue}>getActivityProfile(...)</button>
+              </details>
+
+              {/* Create Activity Profile */}
+              <details>
+                <summary>
+                  <h4>Create Activity Profile</h4>
+                </summary>
+                <label>
+                  activityId
+                  <input
+                    type="text"
+                    value={this.createActivityProfileActivityIdValue}
+                    placeholder="https://www.xapijs.dev/activity/xapijs/xapi-demo"
+                    onInput={(e) => this.createActivityProfileActivityIdValue = (e.target as HTMLInputElement).value}
+                    autoCorrect={"false"}
+                    autoCapitalize={"false"}
+                  />
+                </label>
+                <label>
+                  profileId
+                  <input
+                    type="text"
+                    value={this.createActivityProfileProfileIdValue}
+                    onInput={(e) => this.createActivityProfileProfileIdValue = (e.target as HTMLInputElement).value}
+                    autoCorrect={"false"}
+                    autoCapitalize={"false"}
+                  />
+                </label>
+                <label>
+                  profile
+                  <textarea
+                    value={this.createActivityProfileProfileValue}
+                    onInput={(e) => this.createActivityProfileProfileValue = (e.target as HTMLTextAreaElement).value}
+                    rows={8}
+                    placeholder="{...}"
+                  ></textarea>
+                </label>
+                <label>
+                  ETag
+                  <input
+                    type="text"
+                    value={this.createActivityProfileETagValue}
+                    onInput={(e) => this.createActivityProfileETagValue = (e.target as HTMLInputElement).value}
+                    autoCorrect={"false"}
+                    autoCapitalize={"false"}
+                  />
+                </label>
+                <label>
+                  ETag Header
+                  <select onChange={(e) => {
+                    const target = e.target as HTMLSelectElement;
+                    this.createActivityProfileETagHeaderValue = target.options[target.selectedIndex].value;
+                  }}>
+                    <option value=""></option>
+                    <option value="If-Match">If-Match</option>
+                    <option value="If-None-Match">If-None-Match</option>
+                  </select>
+                </label>
+                <button onClick={() => this.createActivityProfile()} disabled={!this.xapi || !this.createActivityProfileActivityIdValue || !this.createActivityProfileProfileIdValue || !this.createActivityProfileProfileValue}>createActivityProfile(...)</button>
+              </details>
+
+              {/* Set Activity Profile */}
+              <details>
+                <summary>
+                  <h4>Set Activity Profile</h4>
+                </summary>
+                <label>
+                  activityId
+                  <input
+                    type="text"
+                    value={this.setActivityProfileActivityIdValue}
+                    placeholder="https://www.xapijs.dev/activity/xapijs/xapi-demo"
+                    onInput={(e) => this.setActivityProfileActivityIdValue = (e.target as HTMLInputElement).value}
+                    autoCorrect={"false"}
+                    autoCapitalize={"false"}
+                  />
+                </label>
+                <label>
+                  profileId
+                  <input
+                    type="text"
+                    value={this.setActivityProfileProfileIdValue}
+                    onInput={(e) => this.setActivityProfileProfileIdValue = (e.target as HTMLInputElement).value}
+                    autoCorrect={"false"}
+                    autoCapitalize={"false"}
+                  />
+                </label>
+                <label>
+                  profile
+                  <textarea
+                    value={this.setActivityProfileProfileValue}
+                    onInput={(e) => this.setActivityProfileProfileValue = (e.target as HTMLTextAreaElement).value}
+                    rows={8}
+                    placeholder="{...}"
+                  ></textarea>
+                </label>
+                <label>
+                  ETag
+                  <input
+                    type="text"
+                    value={this.setActivityProfileETagValue}
+                    onInput={(e) => this.setActivityProfileETagValue = (e.target as HTMLInputElement).value}
+                    autoCorrect={"false"}
+                    autoCapitalize={"false"}
+                  />
+                </label>
+                <label>
+                  ETag Header
+                  <select onChange={(e) => {
+                    const target = e.target as HTMLSelectElement;
+                    this.setActivityProfileETagHeaderValue = target.options[target.selectedIndex].value;
+                  }}>
+                    <option value=""></option>
+                    <option value="If-Match">If-Match</option>
+                    <option value="If-None-Match">If-None-Match</option>
+                  </select>
+                </label>
+                <button onClick={() => this.setActivityProfile()} disabled={!this.xapi || !this.setActivityProfileActivityIdValue || !this.setActivityProfileProfileIdValue || !this.setActivityProfileProfileValue || !this.setActivityProfileETagValue || !this.setActivityProfileETagHeaderValue}>setActivityProfile(...)</button>
+              </details>
+
+              {/* Delete Activity Profile */}
+              <details>
+                <summary>
+                  <h4>Delete Activity Profile</h4>
+                </summary>
+                <label>
+                  activityId
+                  <input
+                    type="text"
+                    value={this.deleteActivityProfileActivityIdValue}
+                    placeholder="https://www.xapijs.dev/activity/xapijs/xapi-demo"
+                    onInput={(e) => this.deleteActivityProfileActivityIdValue = (e.target as HTMLInputElement).value}
+                    autoCorrect={"false"}
+                    autoCapitalize={"false"}
+                  />
+                </label>
+                <label>
+                  profileId
+                  <input
+                    type="text"
+                    value={this.deleteActivityProfileProfileIdValue}
+                    onInput={(e) => this.deleteActivityProfileProfileIdValue = (e.target as HTMLInputElement).value}
+                    autoCorrect={"false"}
+                    autoCapitalize={"false"}
+                  />
+                </label>
+                <label>
+                  ETag
+                  <input
+                    type="text"
+                    value={this.deleteActivityProfileETagValue}
+                    onInput={(e) => this.deleteActivityProfileETagValue = (e.target as HTMLInputElement).value}
+                    autoCorrect={"false"}
+                    autoCapitalize={"false"}
+                  />
+                </label>
+                <button onClick={() => this.deleteActivityProfile()} disabled={!this.xapi || !this.deleteActivityProfileActivityIdValue || !this.deleteActivityProfileProfileIdValue}>deleteActivityProfile(...)</button>
               </details>
             </details>
           </div>
