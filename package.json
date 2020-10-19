@@ -5,7 +5,7 @@
   "scripts": {
     "build": "stencil build",
     "start": "stencil build --dev --watch --serve",
-    "archive": "npm run build && bestzip xapi-demo.zip www/*"
+    "archive": "npm run build && cd www && bestzip ../xapi-demo.zip *"
   },
   "devDependencies": {
     "@stencil/core": "^1.12.2",
