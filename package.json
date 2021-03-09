@@ -13,6 +13,6 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@xapi/xapi": "^0.6.9"
+    "@xapi/xapi": "^1.0.0"
   }
 }
