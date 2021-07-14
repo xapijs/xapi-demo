@@ -187,31 +187,57 @@ export class AppRoot {
   }
 
   getStatement() {
-    this.xapi.getStatement({
+    const baseQuery = {
       statementId: this.statementIdValue,
-      attachments: this.attachmentsValue,
-      ...(this.formatValue ? { format: this.formatValue as any } : null)
-    })
+      ...(this.formatValue ? { format: this.formatValue as any } : {})
+    };
+    if (this.attachmentsValue) {
+      this.xapi.getStatement({
+        ...baseQuery,
+        attachments: true
+      })
+      .then((result) => {
+        this.addToConsole('getStatement()', JSON.stringify(result.data[0], null, 2));
+      })
+      .catch((error) => {
+        this.addToConsole('getStatement()', JSON.stringify(error, null, 2));
+      });
+    } else {
+      this.xapi.getStatement(baseQuery)
       .then((result) => {
         this.addToConsole('getStatement()', JSON.stringify(result.data, null, 2));
       })
       .catch((error) => {
         this.addToConsole('getStatement()', JSON.stringify(error, null, 2));
       });
+    }
   }
 
   getVoidedStatement() {
-    this.xapi.getVoidedStatement({
+    const baseQuery = {
       voidedStatementId: this.voidedStatementIdValue,
-      attachments: this.voidedAttachmentsValue,
-      ...(this.voidedFormatValue ? { format: this.voidedFormatValue as any } : null)
-    })
-      .then((result) => {
-        this.addToConsole('getVoidedStatement()', JSON.stringify(result.data, null, 2));
+      ...(this.voidedFormatValue ? { format: this.voidedFormatValue as any } : {})
+    };
+    if (this.voidedAttachmentsValue) {
+      this.xapi.getVoidedStatement({
+        ...baseQuery,
+        attachments: true,
       })
-      .catch((error) => {
-        this.addToConsole('getVoidedStatement()', JSON.stringify(error, null, 2));
-      });
+        .then((result) => {
+          this.addToConsole('getVoidedStatement()', JSON.stringify(result.data[0], null, 2));
+        })
+        .catch((error) => {
+          this.addToConsole('getVoidedStatement()', JSON.stringify(error, null, 2));
+        });
+    } else {
+      this.xapi.getVoidedStatement(baseQuery)
+        .then((result) => {
+          this.addToConsole('getVoidedStatement()', JSON.stringify(result.data, null, 2));
+        })
+        .catch((error) => {
+          this.addToConsole('getVoidedStatement()', JSON.stringify(error, null, 2));
+        });
+    }
   }
 
   getStatements() {
