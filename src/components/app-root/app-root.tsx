@@ -159,11 +159,11 @@ export class AppRoot {
 
   newXAPI() {
     if (this.xapi) this.xapi = undefined;
-    this.xapi = new XAPI(
-      this.endpointValue,
-      this.authorizationValue,
-      this.versionSelect.options[this.versionSelect.selectedIndex].value as Versions
-    );
+    this.xapi = new XAPI({
+      endpoint: this.endpointValue,
+      auth: this.authorizationValue,
+      version: this.versionSelect.options[this.versionSelect.selectedIndex].value as Versions
+    });
   }
 
   getAbout() {
@@ -264,7 +264,9 @@ export class AppRoot {
   }
 
   getMoreStatements() {
-    this.xapi.getMoreStatements(this.getMoreStatementsMoreValue)
+    this.xapi.getMoreStatements({
+      more: this.getMoreStatementsMoreValue
+    })
       .then((result) => {
         this.addToConsole('getMoreStatements()', JSON.stringify(result.data, null, 2));
       })
@@ -284,10 +286,10 @@ export class AppRoot {
   }
 
   voidStatement() {
-    this.xapi.voidStatement(
-      JSON.parse(this.voidStatementActorValue),
-      this.voidStatementIdValue
-    )
+    this.xapi.voidStatement({
+      actor: JSON.parse(this.voidStatementActorValue),
+      statementId: this.voidStatementIdValue
+    })
       .then((result) => {
         this.addToConsole('voidStatement()', JSON.stringify(result.data, null, 2));
       })
@@ -297,11 +299,11 @@ export class AppRoot {
   }
 
   getStates() {
-    this.xapi.getStates(
-      JSON.parse(this.getStatesAgentValue),
-      this.getStatesActivityValue,
-      this.getStatesRegistrationValue
-    )
+    this.xapi.getStates({
+      agent: JSON.parse(this.getStatesAgentValue),
+      activityId: this.getStatesActivityValue,
+      registration: this.getStatesRegistrationValue
+    })
       .then((result) => {
         this.addToConsole('getStates()', JSON.stringify(result.data, null, 2));
       })
@@ -311,12 +313,12 @@ export class AppRoot {
   }
 
   getState() {
-    this.xapi.getState(
-      JSON.parse(this.getStateAgentValue),
-      this.getStateActivityValue,
-      this.getStateStateIdValue,
-      this.getStateRegistrationValue
-    )
+    this.xapi.getState({
+      agent: JSON.parse(this.getStateAgentValue),
+      activityId: this.getStateActivityValue,
+      stateId: this.getStateStateIdValue,
+      registration: this.getStateRegistrationValue
+    })
       .then((result) => {
         this.addToConsole('getStates() >> headers.etag:', result.headers.etag);
         this.addToConsole('getState()', JSON.stringify(result.data, null, 2));
@@ -327,15 +329,15 @@ export class AppRoot {
   }
 
   createState() {
-    this.xapi.createState(
-      JSON.parse(this.createStateAgentValue),
-      this.createStateActivityValue,
-      this.createStateStateIdValue,
-      JSON.parse(this.createStateStateValue),
-      this.createStateRegistrationValue,
-      this.createStateETagValue,
-      this.createStateETagHeaderValue as any
-    )
+    this.xapi.createState({
+      agent: JSON.parse(this.createStateAgentValue),
+      activityId: this.createStateActivityValue,
+      stateId: this.createStateStateIdValue,
+      state: JSON.parse(this.createStateStateValue),
+      registration: this.createStateRegistrationValue,
+      etag: this.createStateETagValue,
+      matchHeader: this.createStateETagHeaderValue as any
+    })
       .then((result) => {
         this.addToConsole('createState()', JSON.stringify(result.data, null, 2));
       })
@@ -345,15 +347,15 @@ export class AppRoot {
   }
 
   setState() {
-    this.xapi.setState(
-      JSON.parse(this.setStateAgentValue),
-      this.setStateActivityValue,
-      this.setStateStateIdValue,
-      JSON.parse(this.setStateStateValue),
-      this.setStateRegistrationValue,
-      this.setStateETagValue,
-      this.setStateETagHeaderValue as any
-    )
+    this.xapi.setState({
+      agent: JSON.parse(this.setStateAgentValue),
+      activityId: this.setStateActivityValue,
+      stateId: this.setStateStateIdValue,
+      state: JSON.parse(this.setStateStateValue),
+      registration: this.setStateRegistrationValue,
+      etag: this.setStateETagValue,
+      matchHeader: this.setStateETagHeaderValue as any
+    })
       .then((result) => {
         this.addToConsole('setState()', JSON.stringify(result.data, null, 2));
       })
@@ -363,13 +365,13 @@ export class AppRoot {
   }
 
   deleteState() {
-    this.xapi.deleteState(
-      JSON.parse(this.deleteStateAgentValue),
-      this.deleteStateActivityValue,
-      this.deleteStateStateIdValue,
-      this.deleteStateRegistrationValue,
-      this.deleteStateETagValue
-    )
+    this.xapi.deleteState({
+      agent: JSON.parse(this.deleteStateAgentValue),
+      activityId: this.deleteStateActivityValue,
+      stateId: this.deleteStateStateIdValue,
+      registration: this.deleteStateRegistrationValue,
+      etag: this.deleteStateETagValue
+    })
       .then((result) => {
         this.addToConsole('deleteState()', JSON.stringify(result.data, null, 2));
       })
@@ -379,12 +381,12 @@ export class AppRoot {
   }
 
   deleteStates() {
-    this.xapi.deleteStates(
-      JSON.parse(this.deleteStatesAgentValue),
-      this.deleteStatesActivityValue,
-      this.deleteStatesRegistrationValue,
-      this.deleteStatesETagValue
-    )
+    this.xapi.deleteStates({
+      agent: JSON.parse(this.deleteStatesAgentValue),
+      activityId: this.deleteStatesActivityValue,
+      registration: this.deleteStatesRegistrationValue,
+      etag: this.deleteStatesETagValue
+    })
       .then((result) => {
         this.addToConsole('deleteStates()', JSON.stringify(result.data, null, 2));
       })
@@ -406,10 +408,10 @@ export class AppRoot {
   }
 
   getAgentProfile() {
-    this.xapi.getAgentProfile(
-      JSON.parse(this.getAgentProfileAgentValue),
-      this.getAgentProfileProfileIdValue,
-    )
+    this.xapi.getAgentProfile({
+      agent: JSON.parse(this.getAgentProfileAgentValue),
+      profileId: this.getAgentProfileProfileIdValue,
+    })
       .then((result) => {
         this.addToConsole('getAgentProfile() >> headers.etag:', result.headers.etag);
         this.addToConsole('getAgentProfile()', JSON.stringify(result.data, null, 2));
@@ -420,13 +422,13 @@ export class AppRoot {
   }
 
   createAgentProfile() {
-    this.xapi.createAgentProfile(
-      JSON.parse(this.createAgentProfileAgentValue),
-      this.createAgentProfileProfileIdValue,
-      JSON.parse(this.createAgentProfileProfileValue),
-      this.createAgentProfileETagValue,
-      this.createAgentProfileETagHeaderValue as any
-    )
+    this.xapi.createAgentProfile({
+      agent: JSON.parse(this.createAgentProfileAgentValue),
+      profileId: this.createAgentProfileProfileIdValue,
+      profile: JSON.parse(this.createAgentProfileProfileValue),
+      etag: this.createAgentProfileETagValue,
+      matchHeader: this.createAgentProfileETagHeaderValue as any
+    })
       .then((result) => {
         this.addToConsole('createAgentProfile()', JSON.stringify(result.data, null, 2));
       })
@@ -436,13 +438,13 @@ export class AppRoot {
   }
 
   setAgentProfile() {
-    this.xapi.setAgentProfile(
-      JSON.parse(this.setAgentProfileAgentValue),
-      this.setAgentProfileProfileIdValue,
-      JSON.parse(this.setAgentProfileProfileValue),
-      this.setAgentProfileETagValue,
-      this.setAgentProfileETagHeaderValue as any
-    )
+    this.xapi.setAgentProfile({
+      agent: JSON.parse(this.setAgentProfileAgentValue),
+      profileId: this.setAgentProfileProfileIdValue,
+      profile: JSON.parse(this.setAgentProfileProfileValue),
+      etag: this.setAgentProfileETagValue,
+      matchHeader: this.setAgentProfileETagHeaderValue as any
+    })
       .then((result) => {
         this.addToConsole('setAgentProfile()', JSON.stringify(result.data, null, 2));
       })
@@ -452,11 +454,11 @@ export class AppRoot {
   }
 
   deleteAgentProfile() {
-    this.xapi.deleteAgentProfile(
-      JSON.parse(this.deleteAgentProfileAgentValue),
-      this.deleteAgentProfileProfileIdValue,
-      this.deleteAgentProfileETagValue
-    )
+    this.xapi.deleteAgentProfile({
+      agent: JSON.parse(this.deleteAgentProfileAgentValue),
+      profileId: this.deleteAgentProfileProfileIdValue,
+      etag: this.deleteAgentProfileETagValue
+    })
       .then((result) => {
         this.addToConsole('deleteAgentProfile()', JSON.stringify(result.data, null, 2));
       })
@@ -466,9 +468,9 @@ export class AppRoot {
   }
 
   getActivity() {
-    this.xapi.getActivity(
-      this.getActivityActivityIdValue
-    )
+    this.xapi.getActivity({
+      activityId: this.getActivityActivityIdValue
+    })
       .then((result) => {
         this.addToConsole('getActivity()', JSON.stringify(result.data, null, 2));
       })
@@ -478,9 +480,9 @@ export class AppRoot {
   }
 
   getActivityProfiles() {
-    this.xapi.getActivityProfiles(
-      this.getActivityProfilesActivityIdValue,
-    )
+    this.xapi.getActivityProfiles({
+      activityId: this.getActivityProfilesActivityIdValue,
+    })
       .then((result) => {
         this.addToConsole('getActivityProfiles()', JSON.stringify(result.data, null, 2));
       })
@@ -490,10 +492,10 @@ export class AppRoot {
   }
 
   getActivityProfile() {
-    this.xapi.getActivityProfile(
-      this.getActivityProfileActivityIdValue,
-      this.getActivityProfileProfileIdValue,
-    )
+    this.xapi.getActivityProfile({
+      activityId: this.getActivityProfileActivityIdValue,
+      profileId: this.getActivityProfileProfileIdValue,
+    })
       .then((result) => {
         this.addToConsole('getActivityProfile() >> headers.etag:', result.headers.etag);
         this.addToConsole('getActivityProfile()', JSON.stringify(result.data, null, 2));
@@ -504,13 +506,13 @@ export class AppRoot {
   }
 
   createActivityProfile() {
-    this.xapi.createActivityProfile(
-      this.createActivityProfileActivityIdValue,
-      this.createActivityProfileProfileIdValue,
-      JSON.parse(this.createActivityProfileProfileValue),
-      this.createActivityProfileETagValue,
-      this.createActivityProfileETagHeaderValue as any
-    )
+    this.xapi.createActivityProfile({
+      activityId: this.createActivityProfileActivityIdValue,
+      profileId: this.createActivityProfileProfileIdValue,
+      profile: JSON.parse(this.createActivityProfileProfileValue),
+      etag: this.createActivityProfileETagValue,
+      matchHeader: this.createActivityProfileETagHeaderValue as any
+    })
       .then((result) => {
         this.addToConsole('createActivityProfile()', JSON.stringify(result.data, null, 2));
       })
@@ -520,13 +522,13 @@ export class AppRoot {
   }
 
   setActivityProfile() {
-    this.xapi.setActivityProfile(
-      this.setActivityProfileActivityIdValue,
-      this.setActivityProfileProfileIdValue,
-      JSON.parse(this.setActivityProfileProfileValue),
-      this.setActivityProfileETagValue,
-      this.setActivityProfileETagHeaderValue as any
-    )
+    this.xapi.setActivityProfile({
+      activityId: this.setActivityProfileActivityIdValue,
+      profileId: this.setActivityProfileProfileIdValue,
+      profile: JSON.parse(this.setActivityProfileProfileValue),
+      etag: this.setActivityProfileETagValue,
+      matchHeader: this.setActivityProfileETagHeaderValue as any
+    })
       .then((result) => {
         this.addToConsole('setActivityProfile()', JSON.stringify(result.data, null, 2));
       })
@@ -536,11 +538,11 @@ export class AppRoot {
   }
 
   deleteActivityProfile() {
-    this.xapi.deleteActivityProfile(
-      this.deleteActivityProfileActivityIdValue,
-      this.deleteActivityProfileProfileIdValue,
-      this.deleteActivityProfileETagValue
-    )
+    this.xapi.deleteActivityProfile({
+      activityId: this.deleteActivityProfileActivityIdValue,
+      profileId: this.deleteActivityProfileProfileIdValue,
+      etag: this.deleteActivityProfileETagValue
+    })
       .then((result) => {
         this.addToConsole('deleteActivityProfile()', JSON.stringify(result.data, null, 2));
       })
