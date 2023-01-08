@@ -177,7 +177,9 @@ export class AppRoot {
   }
 
   getAgent() {
-    this.xapi.getAgent(JSON.parse(this.agentValue))
+    this.xapi.getAgent({
+      agent: JSON.parse(this.agentValue)
+    })
       .then((result) => {
         this.addToConsole('getAgent()', JSON.stringify(result.data, null, 2));
       })
@@ -276,7 +278,9 @@ export class AppRoot {
   }
 
   sendStatement() {
-    this.xapi.sendStatement(JSON.parse(this.sendStatementStatementValue))
+    this.xapi.sendStatement({
+      statement: JSON.parse(this.sendStatementStatementValue)
+    })
       .then((result) => {
         this.addToConsole('sendStatement()', JSON.stringify(result.data, null, 2));
       })
@@ -396,9 +400,9 @@ export class AppRoot {
   }
 
   getAgentProfiles() {
-    this.xapi.getAgentProfiles(
-      JSON.parse(this.getAgentProfilesAgentValue),
-    )
+    this.xapi.getAgentProfiles({
+      agent: JSON.parse(this.getAgentProfilesAgentValue),
+    })
       .then((result) => {
         this.addToConsole('getAgentProfiles()', JSON.stringify(result.data, null, 2));
       })
