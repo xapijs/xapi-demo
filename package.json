@@ -8,11 +8,11 @@
     "archive": "npm run build && cd www && bestzip ../xapi-demo.zip *"
   },
   "devDependencies": {
-    "@stencil/core": "^4.7.0",
+    "@stencil/core": "^4.9.1",
     "bestzip": "^2.2.1"
   },
   "license": "MIT",
   "dependencies": {
-    "@xapi/xapi": "^2.2.4"
+    "@xapi/xapi": "^2.2.5"
   }
 }
